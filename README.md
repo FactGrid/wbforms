@@ -1,4 +1,4 @@
-![GitHub](https://img.shields.io/github/license/tholzheim/ceur-graph)
+![GitHub](https://img.shields.io/github/license/FactGrid/wbforms)
 ![Python Version](https://img.shields.io/badge/python-3.12%2B-blue.svg)
 ![Development Status](https://img.shields.io/badge/status-beta-yellowgreen.svg)
 # wbforms
