@@ -597,3 +597,8 @@ dialog article { max-width: 760px; }
   align-items: center;
   gap: 0.3rem;
 }
+
+/* Fix: ItemSearchInput im rail-field */
+.rail .rail-field .search-wrap {
+  width: 100%;
+}
