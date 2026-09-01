@@ -16,7 +16,12 @@ function stringifyForCompare(v) {
 
 export default {
   name: "EntityEditor",
-  components: { FieldInput, StatementListEditor, CommitDialog, ItemSearchInput },
+  components: {
+    FieldInput,
+    StatementListEditor,
+    CommitDialog,
+    ItemSearchInput,
+  },
   props: {
     schema: { default: null },
     username: { type: String, default: null },
