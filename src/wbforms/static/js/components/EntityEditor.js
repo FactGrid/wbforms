@@ -2,6 +2,7 @@ import { apiFetch } from "../api.js";
 import { LANGUAGES, useI18n } from "../i18n.js";
 import CommitDialog from "./CommitDialog.js";
 import FieldInput from "./FieldInput.js";
+import ItemSearchInput from "./ItemSearchInput.js";
 import StatementListEditor from "./StatementListEditor.js";
 
 function isEmptyValue(v) {
@@ -15,7 +16,7 @@ function stringifyForCompare(v) {
 
 export default {
   name: "EntityEditor",
-  components: { FieldInput, StatementListEditor, CommitDialog },
+  components: { FieldInput, StatementListEditor, CommitDialog, ItemSearchInput },
   props: {
     schema: { default: null },
     username: { type: String, default: null },
@@ -99,6 +100,11 @@ export default {
       return n;
     });
     const hasChanges = computed(() => pendingCount.value > 0);
+
+    const isValidQid = computed(() => {
+      const q = qidInput.value.trim();
+      return q && /^Q\d+$/i.test(q);
+    });
 
     function resetForm() {
       loadedData.value = null;
@@ -265,6 +271,7 @@ export default {
       loadedQid,
       pendingCount,
       hasChanges,
+      isValidQid,
       load,
       startNew,
       setCalendar,
@@ -312,15 +319,13 @@ export default {
 
           <div class="rail-field">
             <label>{{ t('entity_load_label') }}</label>
-            <div class="rail-row">
-              <input v-model="qidInput" :placeholder="t('entity_load_placeholder')"
-                     :disabled="!selectedEntity"
-                     @keyup.enter="load" />
-              <button @click="load" :aria-busy="loadLoading" :disabled="!selectedEntity">
-                {{ t('entity_load_button') }}
-              </button>
-            </div>
-            <span class="key-hint">↵ {{ t('entity_load_button') }}</span>
+            <item-search-input
+              v-model="qidInput"
+              :disabled="!selectedEntity"
+            />
+            <button @click="load" :aria-busy="loadLoading" :disabled="!selectedEntity || !isValidQid" style="margin-top: 0.4rem;">
+              {{ t('entity_load_button') }}
+            </button>
           </div>
 
           <button class="secondary outline" :disabled="!selectedEntity" @click="startNew">
