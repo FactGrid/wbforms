@@ -9,7 +9,7 @@ from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from wikibaseintegrator import datatypes
 
-from wbforms.calendar import DEFAULT_CALENDAR_MODEL, calendar_model_options
+from wbforms.wb_calendar import DEFAULT_CALENDAR_MODEL, calendar_model_options
 from wbforms.codegen import get_models
 from wbforms.codegen.endpoints import derive_endpoints
 from wbforms.datamodel.item import (
