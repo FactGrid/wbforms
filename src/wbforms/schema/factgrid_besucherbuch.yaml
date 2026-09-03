@@ -31,6 +31,18 @@ slots:
         local_name_value: "Description"
       de:
         local_name_value: "Beschreibung"
+  instance_of:
+    range: string
+    required: true
+    ifabsent: "https://database.factgrid.de/entity/Q7"
+    local_names:
+      en:
+        local_name_value: "instance of"
+      de:
+        local_name_value: "ist ein/e"
+    annotations:
+      wikibase_id: "https://database.factgrid.de/prop/direct/P2"
+      wikibase_type: item     
   family_name:
     range: string
     local_names:
@@ -322,6 +334,7 @@ classes:
       python_base: entity_item
     slots:
       - description
+      - instance_of
       - family_name
       - given_name
       - date_of_birth

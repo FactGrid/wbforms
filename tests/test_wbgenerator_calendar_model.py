@@ -13,7 +13,7 @@ from pathlib import Path
 from wikibaseintegrator import WikibaseIntegrator, datatypes
 from wikibaseintegrator.wbi_enums import ActionIfExists
 
-from wbforms.calendar import GREGORIAN_CALENDAR_MODEL, JULIAN_CALENDAR_MODEL
+from wbforms.wb_calendar import GREGORIAN_CALENDAR_MODEL, JULIAN_CALENDAR_MODEL
 from wbforms.codegen.pydantic_gen import generate_models
 from wbforms.wbgenerator import (
     create_item_from_model,
