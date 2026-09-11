@@ -308,7 +308,7 @@ class Wikibase(BaseModel):
                 self._fix_known_entity_issues(item)
             # Remove sitelinks to avoid validation errors when the linked pages don't exist
             # The editor doesn't modify sitelinks, so it's safe to remove them before writing
-            if hasattr(item, 'sitelinks') and item.sitelinks:
+            if hasattr(item, "sitelinks") and item.sitelinks:
                 item.sitelinks.sitelinks.clear()
             res = item.write(
                 mediawiki_api_url=self.mediawiki_api_url,

@@ -73,7 +73,9 @@ const App = {
     async function loadSchema() {
       if (!isLoggedIn.value) return;
       try {
-        state.schema = await apiFetch(`/api/schema/entities?language=${locale.value}`);
+        state.schema = await apiFetch(
+          `/api/schema/entities?language=${locale.value}`,
+        );
       } catch (e) {
         state.schemaError = e.message;
       }
@@ -97,12 +99,15 @@ const App = {
     loadSchema();
 
     // Reload schema when language changes
-    watch(() => locale.value, () => {
-      if (isLoggedIn.value) {
-        loadSchema();
-      }
-    });
-    
+    watch(
+      () => locale.value,
+      () => {
+        if (isLoggedIn.value) {
+          loadSchema();
+        }
+      },
+    );
+
     return { state, isLoggedIn, onLogin, onLogout, t };
   },
   template: `

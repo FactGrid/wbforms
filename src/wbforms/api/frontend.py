@@ -3,14 +3,13 @@
 from pathlib import Path
 from typing import get_args
 
-import yaml
 import httpx
+import yaml
 from fastapi import APIRouter, Query
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from wikibaseintegrator import datatypes
 
-from wbforms.wb_calendar import DEFAULT_CALENDAR_MODEL, calendar_model_options
 from wbforms.codegen import get_models
 from wbforms.codegen.endpoints import derive_endpoints
 from wbforms.datamodel.item import (
@@ -23,6 +22,7 @@ from wbforms.datamodel.item import (
     calendar_field_name,
 )
 from wbforms.settings import get_settings
+from wbforms.wb_calendar import DEFAULT_CALENDAR_MODEL, calendar_model_options
 from wbforms.wbgenerator import _is_list_annotation, _wikibase_reference_class, get_statement_field_type
 
 _STATIC_DIR = Path(__file__).parent.parent / "static"
@@ -55,15 +55,16 @@ def _wikibase_type(field_info) -> str | None:
 def _label(name: str) -> str:
     return name.replace("_", " ").title()
 
+
 def _get_localized_label(slot_name: str, language: str = "en") -> str:
     """Hole das lokalisierte Label für einen Slot aus dem Schema.
-    
+
     Falls der Slot local_names definiert hat, wird das Label für die
     angegebene Sprache zurückgegeben. Falls nicht, wird ein generisches
     Label aus dem Slot-Namen erstellt.
     """
     schema = _get_schema()
-    
+
     # Suche nach dem Slot in den Slots des Schemas
     slots = schema.get("slots", {})
     if slot_name in slots:
@@ -82,9 +83,10 @@ def _get_localized_label(slot_name: str, language: str = "en") -> str:
             for lang_data in local_names.values():
                 if isinstance(lang_data, dict) and "local_name_value" in lang_data:
                     return lang_data["local_name_value"]
-    
+
     # Fallback: generisches Label aus dem Slot-Namen
     return _label(slot_name)
+
 
 def _add_calendar_metadata(descriptor: dict, owner_cls: type[BaseModel], fname: str, finfo) -> dict:
     """Attach calendar-selector metadata to a `time` field descriptor.
@@ -184,7 +186,7 @@ def _build_entity_schema(
 
     # Always expose label and description as top-level text inputs; requiredness follows
     # the model (mandatory unless the schema declares the slot as optional).
-    for meta_name, meta_label in [("label", "Label"), ("description", "Description")]:
+    for meta_name, _meta_label in [("label", "Label"), ("description", "Description")]:
         finfo = model_cls.model_fields.get(meta_name)
         if finfo is None:
             continue
@@ -195,7 +197,7 @@ def _build_entity_schema(
             # label is a special term slot without local_names in schema
             label_value = _get_localized_label("label", language)
         else:
-            label_value = _label(meta_name)            
+            label_value = _label(meta_name)
         term_field: dict = {
             "name": meta_name,
             "label": label_value,
@@ -287,10 +289,10 @@ def get_public_config() -> dict:
 
 @router.get("/api/schema/entities")
 def get_schema_entities(
-    language: str = Query(default="en", description="Language for localized labels (e.g., 'en', 'de')")
+    language: str = Query(default="en", description="Language for localized labels (e.g., 'en', 'de')"),
 ) -> list[dict]:
     """Return schema metadata for all item-type entities, suitable for form generation.
-    
+
     The language parameter controls which localized labels are returned for fields.
     Falls back to English if the requested language is not available.
     """
