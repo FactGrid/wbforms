@@ -9,7 +9,7 @@ from pydantic import AnyHttpUrl, ConfigDict, Field, create_model
 from wikibaseintegrator import datatypes
 from wikibaseintegrator.wbi_enums import WikibaseSnakType
 
-from wbforms.calendar import normalize_calendar_model
+from wbforms.wb_calendar import normalize_calendar_model
 from wbforms.datamodel.item import (
     CALENDAR_FIELD_SUFFIX,
     CALENDAR_MODEL,

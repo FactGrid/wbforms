@@ -12,7 +12,7 @@ from wikibaseintegrator.models import Claim, Snak
 from wikibaseintegrator.models.references import Reference as WBIReference
 from wikibaseintegrator.wbi_enums import ActionIfExists, WikibaseSnakType
 
-from wbforms.calendar import DEFAULT_CALENDAR_MODEL, normalize_calendar_model
+from wbforms.wb_calendar import DEFAULT_CALENDAR_MODEL, normalize_calendar_model
 from wbforms.datamodel.item import (
     CALENDAR_MODEL,
     WIKIBASE_ID,
